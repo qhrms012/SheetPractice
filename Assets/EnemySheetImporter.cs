@@ -5,24 +5,22 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemySheetImporter
+public class EnemySheetImporter : MonoBehaviour 
 {
-    [MenuItem("Tools/Import/Enemy From Sheet")]
-    public static void Import()
+    const string csvUrl = "https://docs.google.com/spreadsheets/d/1ls9Ex1mnZJ073nyx8Qj5dBQ-kYTftmO9lWHPH1tYBSE/export?format=csv"; // 시트 주소
+    string sheetName = "Sheet";
+
+    private void Start()
     {
-        string csvUrl = "1ls9Ex1mnZJ073nyx8Qj5dBQ-kYTftmO9lWHPH1tYBSE"; // 시트 주소
-        string sheetName = "Sheet";
-
+        StartCoroutine(Import());
+    }
+    [MenuItem("Tools/Import/Enemy From Sheet")]
+    IEnumerator Import()
+    {       
         UnityWebRequest www = UnityWebRequest.Get(csvUrl);
-        www.SendWebRequest();
+        yield return www.SendWebRequest();
 
-        while (!www.isDone) { } // 간단히 동기처리 (Editor에서는 OK)
-
-        if (www.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(www.error);
-            return;
-        }
+        
 
         string[] lines = www.downloadHandler.text.Split('\n');
         List<EnemyData> list = new List<EnemyData>();
@@ -52,5 +50,6 @@ public class EnemySheetImporter
 
         Debug.Log($"불러오기 완료: {list.Count}개");
     }
+
 }
 #endif

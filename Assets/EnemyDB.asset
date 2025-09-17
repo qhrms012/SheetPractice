@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a9eb741710c624f89d852f7e623b0b, type: 3}
   m_Name: EnemyDB
   m_EditorClassIdentifier: 
-  enemies: []
+  enemies:
+  - id: slime
+    name: "\uC2AC\uB77C\uC784"
+    hp: 30
+    speed: 100
+  - id: goblin
+    name: "\uACE0\uBE14\uB9B0"
+    hp: 50
+    speed: 100
